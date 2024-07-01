@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_04_122239) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_01_124050) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -64,6 +64,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_04_122239) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "courses", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.integer "teacher_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "crops", force: :cascade do |t|
     t.string "crop_name"
     t.integer "crop_age"
@@ -103,6 +111,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_04_122239) do
     t.index ["user_id"], name: "index_issues_on_user_id"
   end
 
+  create_table "live_sessions", force: :cascade do |t|
+    t.integer "course_id"
+    t.datetime "start_time"
+    t.string "link"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "matches", force: :cascade do |t|
     t.bigint "tourist_id", null: false
     t.bigint "local_tourist_attraction_id", null: false
@@ -140,18 +156,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_04_122239) do
     t.string "location", null: false
     t.string "national_id", null: false
     t.string "phone_number", null: false
-    t.string "expertise"
-    t.string "languages"
-    t.string "experience"
-    t.string "bio"
-    t.string "preferences"
-    t.string "interests"
-    t.string "category"
-    t.float "average_rating"
-    t.integer "number_of_ratings"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "videos", force: :cascade do |t|
+    t.integer "course_id"
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

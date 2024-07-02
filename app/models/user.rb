@@ -25,7 +25,7 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :first_name, presence: true, length: { minimum: 3, maximum: 20 }
   validates :last_name, presence: true, length: { minimum: 3, maximum: 20 }
-  validates :location, presence: true
+  # validates :location, presence: true
   validates :national_id, presence: true, uniqueness: true
   validates :phone_number, presence: true, uniqueness: true
  

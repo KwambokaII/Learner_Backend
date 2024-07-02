@@ -42,20 +42,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_01_124050) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "cart_items", force: :cascade do |t|
-    t.integer "quantity"
-    t.float "total"
-    t.integer "status", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "product_id", null: false
-    t.bigint "user_id", null: false
-    t.bigint "crop_id", null: false
-    t.index ["crop_id"], name: "index_cart_items_on_crop_id"
-    t.index ["product_id"], name: "index_cart_items_on_product_id"
-    t.index ["user_id"], name: "index_cart_items_on_user_id"
-  end
-
   create_table "communications", force: :cascade do |t|
     t.integer "sender_id"
     t.integer "receiver_id"
@@ -72,21 +58,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_01_124050) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "crops", force: :cascade do |t|
-    t.string "crop_name"
-    t.integer "crop_age"
-    t.float "acreage"
-    t.integer "trees_0_to_3"
-    t.integer "trees_4_to_7"
-    t.integer "trees_7_plus"
-    t.string "farm_plot_no"
-    t.string "variety"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_crops_on_user_id"
-  end
-
   create_table "feedbacks", force: :cascade do |t|
     t.integer "tourist_id"
     t.integer "expert_id"
@@ -94,21 +65,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_01_124050) do
     t.text "comments"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "issues", force: :cascade do |t|
-    t.text "description"
-    t.string "issue_type"
-    t.datetime "time"
-    t.integer "status", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "crop_id", null: false
-    t.bigint "user_id", null: false
-    t.bigint "farm_specialist_id", null: false
-    t.index ["crop_id"], name: "index_issues_on_crop_id"
-    t.index ["farm_specialist_id"], name: "index_issues_on_farm_specialist_id"
-    t.index ["user_id"], name: "index_issues_on_user_id"
   end
 
   create_table "live_sessions", force: :cascade do |t|
@@ -126,19 +82,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_01_124050) do
     t.datetime "updated_at", null: false
     t.index ["local_tourist_attraction_id"], name: "index_matches_on_local_tourist_attraction_id"
     t.index ["tourist_id"], name: "index_matches_on_tourist_id"
-  end
-
-  create_table "products", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.float "price"
-    t.integer "quantity"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.bigint "crop_id", null: false
-    t.index ["crop_id"], name: "index_products_on_crop_id"
-    t.index ["user_id"], name: "index_products_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -170,15 +113,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_01_124050) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "cart_items", "crops"
-  add_foreign_key "cart_items", "products"
-  add_foreign_key "cart_items", "users"
-  add_foreign_key "crops", "users"
-  add_foreign_key "issues", "crops"
-  add_foreign_key "issues", "users"
-  add_foreign_key "issues", "users", column: "farm_specialist_id"
   add_foreign_key "matches", "users", column: "local_tourist_attraction_id"
   add_foreign_key "matches", "users", column: "tourist_id"
-  add_foreign_key "products", "crops"
-  add_foreign_key "products", "users"
 end

@@ -5,5 +5,4 @@ class CurrentsController < ApplicationController
     @user = current_user
     render json: { data: @user }
   end
-endclass CurrentsController < ApplicationController
  
